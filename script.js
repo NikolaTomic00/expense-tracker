@@ -6,7 +6,7 @@ const transactionFormEl = document.getElementById("transaction-form");
 const descriptionEl = document.getElementById("description");
 const amountEl = document.getElementById("amount");
 
-let transaction = JSON.parse(localStorage.getItem("transactions")) || [];
+let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
 transactionFormEl.addEventListener("submit", addTransaction);
 
@@ -16,13 +16,13 @@ function addTransaction(e) {
   const description = descriptionEl.value.trim();
   const amount = parseFloat(amountEl.value);
 
-  transaction.push({
+  transactions.push({
     id: Date.now(),
     description,
     amount,
   });
 
-  localStorage.setItem("transactions", JSON.stringify(transaction));
+  localStorage.setItem("transactions", JSON.stringify(transactions));
 
   updateTransactionList();
   updateSummary();
@@ -31,7 +31,7 @@ function addTransaction(e) {
 
 function updateTransactionList() {
   transactionListEl.innerHTML = "";
-  const sortTransaction = [...transaction].reverse();
+  const sortTransaction = [...transactions].reverse();
 
   sortTransaction.forEach((transaction) => {
     const transactionEl = getTransaction(transaction);
@@ -53,3 +53,4 @@ function getTransaction(transaction) {
   return li;
 }
 
+updateTransactionList();
